@@ -25,14 +25,15 @@ src_prepare() {
 }
 
 src_install() {
-	exeinto /usr/bin
+	exeinto /opt/${PN}/bin
 	doexe bin/*
 
-	insinto /usr/lib
+	insinto /opt/${PN}/lib
 	doins lib/*.jar
 
 	dodir /etc/env.d
-	echo "EC2_HOME=/usr" > "${T}"/99${PN} || die "Failed to write configuration variable."
+	echo "EC2_HOME=/opt/${PN}" > "${T}"/99${PN} || die "Failed to write configuration variable."
+	echo "PATH=/opt/${PN}/bin" >> "${T}"/99${PN} || die "Failed to write configuration variable."
 	doenvd "${T}"/99${PN}
 
 	dodoc THIRDPARTYLICENSE.TXT
